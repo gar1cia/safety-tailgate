@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Archer Civil - Daily Tailgate / Pre-Task Safety Meeting</title>
+
+  <style>
+    :root{
+      --subhead: #00007e;   /* required */
+      --accent:  #7e7e7e;   /* required */
+      --bg:      #f6f7fb;
+      --card:    #ffffff;
+      --text:    #111827;
+      --muted:   #6b7280;
+      --border:  #e5e7eb;
+      --danger:  #b91c1c;
+      --ok:      #065f46;
+      --shadow:  0 10px 24px rgba(0,0,0,.06);
+      --radius:  14px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 22px auto 80px;
+      padding: 0 16px;
+    }
+
+    .topbar{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 10px;
+      z-index: 50;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 260px;
+    }
+
+    .brand img{
+      height: 46px;
+      width: auto;
+      display:block;
+      object-fit: contain;
+    }
+
+    .brand .meta{
+      line-height: 1.1;
+    }
+    .brand .meta .title{
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--subhead);
+      letter-spacing: .2px;
+    }
+    .brand .meta .subtitle{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    button{
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 700;
+      cursor:pointer;
+      transition: transform .06s ease, box-shadow .2s ease, border-color .2s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,.05);
+    }
+    button:hover{ border-color: #d1d5db; box-shadow: 0 10px 18px rgba(0,0,0,.07); }
+    button:active{ transform: translateY(1px); }
+    .primary{
+      border-color: var(--subhead);
+      color: #fff;
+      background: var(--subhead);
+    }
+    .ghost{
+      background: transparent;
+      box-shadow: none;
+      border-color: var(--border);
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .danger{
+      border-color: #ef4444;
+      color:#fff;
+      background: #ef4444;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (min-width: 980px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+      .span-2{ grid-column: span 2; }
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px 14px 16px;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #e5e7eb;
+      margin-bottom: 12px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: var(--subhead);
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+    .section-head .hint{
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .fields{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 700px){
+      .fields.cols-2{ grid-template-columns: 1fr 1fr; }
+      .fields.cols-3{ grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    label{
+      display:block;
+      font-size: 12px;
+      color: #374151;
+      margin-bottom: 6px;
+      font-weight: 800;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    input[type="number"],
+    select,
+    textarea{
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 10px;
+      font-size: 14px;
+      outline: none;
+      background: #fff;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    textarea{ min-height: 88px; resize: vertical; }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(0,0,126,.55);
+      box-shadow: 0 0 0 4px rgba(0,0,126,.10);
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 10px;
+      background:#fff;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
+    }
+    .pill .dot{
+      width:10px;height:10px;border-radius:999px;background: var(--accent);
+      display:inline-block;
+    }
+
+    .checklist{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 700px){
+      .checklist{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .check{
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 10px;
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      background: #fff;
+    }
+    .check input[type="checkbox"]{
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--subhead);
+      flex: 0 0 auto;
+    }
+    .check .txt{
+      flex:1;
+    }
+    .check .txt .name{
+      font-weight: 900;
+      font-size: 13px;
+      color: #111827;
+    }
+    .check .txt .desc{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.25;
+    }
+
+    .row-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+
+    .mini{
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 900;
+      box-shadow: none;
+    }
+
+    .table{
+      width:100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow:hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:#fff;
+    }
+    .table th{
+      text-align:left;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing:.2px;
+      color: var(--subhead);
+      background: rgba(126,126,126,.10);
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 900;
+    }
+    .table td{
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .table tr:last-child td{ border-bottom: none; }
+
+    .sig{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 700px){
+      .sig{ grid-template-columns: 2fr 1fr; }
+    }
+
+    .note{
+      border-left: 4px solid var(--accent);
+      background: rgba(126,126,126,.08);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: #374151;
+      font-weight: 750;
+      line-height: 1.25;
+    }
+
+    .status{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+    }
+    .badge.ok{ border-color: rgba(6,95,70,.25); color: var(--ok); background: rgba(6,95,70,.06); }
+    .badge.warn{ border-color: rgba(185,28,28,.25); color: var(--danger); background: rgba(185,28,28,.06); }
+
+    .footer{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align:center;
+    }
+
+    /* Print */
+    @media print{
+      body{ background:#fff; }
+      .topbar{ position: static; box-shadow:none; }
+      .actions{ display:none; }
+      .card{ box-shadow:none; }
+      .wrap{ margin: 0; max-width: none; }
+      .footer{ display:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <!-- Put archer_logo.png in the same folder as this HTML, or replace src with your hosted URL -->
+        <img src="archer_logo.png" alt="Archer Civil Construction LLC logo">
+        <div class="meta">
+          <div class="title">Daily Tailgate / Pre-Task Safety Meeting</div>
+          <div class="subtitle">Caltrans-ready documentation • auditable and field-practical</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="ghost" type="button" id="loadBtn">Load Draft</button>
+        <button class="ghost" type="button" id="saveBtn">Save Draft</button>
+        <button class="ghost" type="button" id="jsonBtn">Download JSON</button>
+        <button class="primary" type="button" onclick="window.print()">Print / PDF</button>
+        <button class="danger" type="button" id="resetBtn">Reset</button>
+      </div>
+    </div>
+
+    <form id="tailgateForm" class="grid" autocomplete="off">
+      <div class="card span-2">
+        <div class="section-head">
+          <h2>Project Control</h2>
+          <div class="hint"><span class="pill"><span class="dot"></span>Use one form per crew per shift</span></div>
+        </div>
+
+        <div class="fields cols-3">
+          <div>
+            <label for="projectName">Project Name</label>
+            <input id="projectName" name="projectName" type="text" placeholder="e.g., SR-63/65 Rumble Strips" required />
+          </div>
+          <div>
+            <label for="contractNo">Contract No.</label>
+            <input id="contractNo" name="contractNo" type="text" placeholder="e.g., 06-1G7404" />
+          </div>
+          <div>
+            <label for="eaNo">EA / EFIS / Work Order</label>
+            <input id="eaNo" name="eaNo" type="text" placeholder="Optional" />
+          </div>
+        </div>
+
+        <div class="fields cols-3" style="margin-top:10px;">
+          <div>
+            <label for="date">Date</label>
+            <input id="date" name="date" type="date" required />
+          </div>
+          <div>
+            <label for="startTime">Tailgate Start Time</label>
+            <input id="startTime" name="startTime" type="time" required />
+          </div>
+          <div>
+            <label for="location">Work Location (Stationing / Area)</label>
+            <input id="location" name="location" type="text" placeholder="e.g., Sta 120+00 to 150+00" />
+          </div>
+        </div>
+
+        <div class="fields cols-3" style="margin-top:10px;">
+          <div>
+            <label for="foreman">Foreman (Lead)</label>
+            <input id="foreman" name="foreman" type="text" placeholder="Name" required />
+          </div>
+          <div>
+            <label for="crewSize">Crew Size</label>
+            <input id="crewSize" name="crewSize" type="number" min="0" step="1" placeholder="0" />
+          </div>
+          <div>
+            <label for="language">Meeting Language</label>
+            <select id="language" name="language">
+              <option value="">Select</option>
+              <option>English</option>
+              <option>Spanish</option>
+              <option>Bilingual</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="fields cols-3" style="margin-top:10px;">
+          <div>
+            <label for="weather">Weather / Conditions</label>
+            <input id="weather" name="weather" type="text" placeholder="e.g., Clear, windy, wet shoulder" />
+          </div>
+          <div>
+            <label for="heat">Heat Illness Plan Needed Today?</label>
+            <select id="heat" name="heat">
+              <option value="">Select</option>
+              <option>No</option>
+              <option>Yes - high heat procedures</option>
+              <option>Yes - standard heat precautions</option>
+            </select>
+          </div>
+          <div>
+            <label for="tcpRef">Traffic Control Reference</label>
+            <input id="tcpRef" name="tcpRef" type="text" placeholder="TCP sheet / closure # / TMC ref" />
+          </div>
+        </div>
+
+        <div class="status">
+          <span class="badge ok">Stop-work authority applies to all employees and subs</span>
+          <span class="badge" id="draftStatus">Draft not saved</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h2>Planned Work</h2>
+          <div class="hint">Describe what will happen today</div>
+        </div>
+
+        <div class="fields">
+          <div>
+            <label for="primaryTasks">Primary Task(s)</label>
+            <textarea id="primaryTasks" name="primaryTasks" placeholder="e.g., place HMA, compact, install rumble strips, shoulder backing"></textarea>
+          </div>
+          <div>
+            <label for="secondaryTasks">Secondary / Support Task(s)</label>
+            <textarea id="secondaryTasks" name="secondaryTasks" placeholder="e.g., sweep, prep, signage moves, handwork, QC support"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h2>People / Subs / Trucks</h2>
+          <div class="hint">Who is on site or interfacing</div>
+        </div>
+
+        <div class="fields">
+          <div>
+            <label for="subs">Subcontractors / Trucking Companies</label>
+            <textarea id="subs" name="subs" placeholder="List subs, trucking, suppliers, and points of contact"></textarea>
+          </div>
+          <div class="note">
+            Documentation tip: If a sub or trucking firm is on site, ensure they receive the same hazard briefing and confirm their controls (PPE, spotters, backup alarms, radios).
+          </div>
+        </div>
+      </div>
+
+      <div class="card span-2">
+        <div class="section-head">
+          <h2>Equipment and Work Controls</h2>
+          <div class="hint">List key equipment and the control plan</div>
+        </div>
+
+        <div class="fields cols-2">
+          <div>
+            <label for="equipmentList">Equipment to be Used (include unit #)</label>
+            <textarea id="equipmentList" name="equipmentList" placeholder="e.g., Paver #__, Roller #__, Water truck #__, Backhoe #__"></textarea>
+          </div>
+          <div>
+            <label for="controlsSummary">Controls Summary (sequencing / exclusion zones / spotters / comms)</label>
+            <textarea id="controlsSummary" name="controlsSummary" placeholder="e.g., establish exclusion zone, assign spotter for backing, radio channel, pedestrian control"></textarea>
+          </div>
+        </div>
+
+        <div class="row-actions">
+          <button class="mini" type="button" onclick="addHazardRow()">+ Add Hazard → Control Row</button>
+          <button class="mini ghost" type="button" onclick="addHazardRow(true)">+ Add Row (pre-filled examples)</button>
+        </div>
+
+        <div style="margin-top:10px;">
+          <table class="table" aria-label="Hazard control table">
+            <thead>
+              <tr>
+                <th style="width:42%;">Hazard Identified</th>
+                <th style="width:58%;">Control Implemented (what you will do)</th>
+              </tr>
+            </thead>
+            <tbody id="hazardTableBody">
+              <!-- rows inserted by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card span-2">
+        <div class="section-head">
+          <h2>Hazard Checklist</h2>
+          <div class="hint">Check what applies today</div>
+        </div>
+
+        <div class="checklist">
+          <div class="check">
+            <input type="checkbox" id="hz_traffic" name="hz_traffic">
+            <div class="txt">
+              <div class="name">Traffic exposure / intrusion risk</div>
+              <div class="desc">Work zone set per TCP; escape path; TCS coordination; TMC call-in as required</div>
+            </div>
+          </div>
+
+          <div class="check">
+            <input type="checkbox" id="hz_mobile" name="hz_mobile">
+            <div class="txt">
+              <div class="name">Mobile equipment interaction</div>
+              <div class="desc">Pedestrian separation, defined travel paths, eye contact rules, spotter assignments</div>
+            </div>
+          </div>
+
+          <div class="check">
+            <input type="checkbox" id="hz_backing" name="hz_backing">
+            <div class="txt">
+              <div class="name">Backing operations</div>
+              <div class="desc">Backup alarms functional; spotter; no backing without signal</div>
+            </div>
+          </div>
+
+          <div class="check">
+            <input type="checkbox" id="hz_excav" name="hz_excav">
+            <div class="txt">
+              <div class="name">Excavation / trenching</div>
+              <div class="desc">Utility clearance; protective system; competent person; spoil placement; access/egress</div>
+            </div>
+          </div>
+
+          <div class="check">
+            <input type="checkbox" id="hz_overhead" name="hz_overhead">
+            <div class="txt">
+              <div class="name">Overhead hazards / power lines</div>
+              <div class="desc">Minimum clearance; dedicated spotter if needed; staging plan</div>
+            </div>
+          </div>
+
+          <div class="check">
+            <input type="checkbox" id="hz_hotwork" name="hz_hotwork">
+            <div class="txt">
+              <div class="name">Hot work / asphalt / burns</div>
+              <div class="desc">Heat-resistant PPE; safe fueling; fire extinguisher; skin exposure controls</div>
+            </div>
+          </div>
+
+          <div class="check">
+            <input type="checkbox" id="hz_heatill" name="hz_heatill">
+            <div class="txt">
+              <div class="name">Heat illness exposure</div>
+              <div class="desc">Water, shade, recovery plan, high heat triggers, buddy system</div>
+            </div>
+          </div>
+
+          <div class="check">
+            <input type="checkbox" id="hz_night" name="hz_night">
+            <div class="txt">
+              <div class="name">Night work / low visibility</div>
+              <div class="desc">Lighting plan; high-vis requirements; vehicle lighting; glare control</div>
+            </div>
+          </div>
+
+          <div class="check">
+            <input type="checkbox" id="hz_public" name="hz_public">
+            <div class="txt">
+              <div class="name">Public interface</div>
+              <div class="desc">Barriers, flagging, safe pedestrian routing, clear signage, public complaints route</div>
+            </div>
+          </div>
+
+          <div class="check">
+            <input type="checkbox" id="hz_materials" name="hz_materials">
+            <div class="txt">
+              <div class="name">HazMat / silica / dust / chemicals</div>
+              <div class="desc">SDS available; labeling; exposure controls; respirators if required; wet methods</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fields cols-2" style="margin-top:10px;">
+          <div>
+            <label for="otherHazards">Other Hazards (describe)</label>
+            <textarea id="otherHazards" name="otherHazards" placeholder="Anything unique to today"></textarea>
+          </div>
+          <div>
+            <label for="ppe">PPE Required Today (specific)</label>
+            <textarea id="ppe" name="ppe" placeholder="e.g., Class 3 vest, safety glasses, gloves, hearing, face shield, cut-resistant"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h2>Safety Focus of the Day</h2>
+          <div class="hint">One key message</div>
+        </div>
+
+        <div class="fields">
+          <div>
+            <label for="safetyFocus">Safety topic / near-miss / reminder</label>
+            <textarea id="safetyFocus" name="safetyFocus" placeholder="e.g., backing safety emphasis; heat illness; lane intrusion near-miss lesson learned"></textarea>
+          </div>
+          <div>
+            <label for="changes">Did conditions change after tailgate?</label>
+            <select id="changes" name="changes">
+              <option value="">Select</option>
+              <option>No</option>
+              <option>Yes - second tailgate conducted</option>
+              <option>Yes - work paused pending controls</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h2>Attendance</h2>
+          <div class="hint">Add names and signatures/initials</div>
+        </div>
+
+        <div class="row-actions">
+          <button class="mini" type="button" onclick="addCrewRow()">+ Add Crew Member</button>
+          <button class="mini ghost" type="button" onclick="addCrewRow(true)">+ Add 5 Rows</button>
+        </div>
+
+        <div style="margin-top:10px;">
+          <table class="table" aria-label="Crew attendance table">
+            <thead>
+              <tr>
+                <th style="width:44%;">Printed Name</th>
+                <th style="width:20%;">Initials</th>
+                <th style="width:36%;">Company (if sub)</th>
+              </tr>
+            </thead>
+            <tbody id="crewBody">
+              <!-- rows inserted by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note" style="margin-top:10px;">
+          Statement: I participated in the tailgate meeting and understand today’s tasks, hazards, and controls. I will stop work if conditions become unsafe.
+        </div>
+      </div>
+
+      <div class="card span-2">
+        <div class="section-head">
+          <h2>Foreman Certification</h2>
+          <div class="hint">Required sign-off</div>
+        </div>
+
+        <div class="sig">
+          <div>
+            <label for="foremanCert">Foreman Certification Statement</label>
+            <textarea id="foremanCert" name="foremanCert">I certify this tailgate / pre-task safety meeting was conducted before work began, hazards were reviewed, and controls were communicated to all employees and subcontractors present.</textarea>
+          </div>
+          <div>
+            <label for="foremanSig">Foreman Signature (type name)</label>
+            <input id="foremanSig" name="foremanSig" type="text" placeholder="Type full name" />
+            <div style="height:10px;"></div>
+            <label for="certTime">Certification Time</label>
+            <input id="certTime" name="certTime" type="time" />
+          </div>
+        </div>
+
+        <div class="fields" style="margin-top:10px;">
+          <div>
+            <label for="notes">Notes / Follow-ups / Corrective Actions</label>
+            <textarea id="notes" name="notes" placeholder="Document stop-work, corrections made, additional controls, RE/TMC communications, etc."></textarea>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="footer">
+      Archer Civil Construction LLC • Daily Tailgate / Pre-Task Planning Record
+    </div>
+  </div>
+
+  <script>
+    // ---------- Helpers ----------
+    const $ = (id) => document.getElementById(id);
+
+    function nowLocalDate(){
+      const d = new Date();
+      const pad = (n) => String(n).padStart(2,'0');
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    }
+    function nowLocalTime(){
+      const d = new Date();
+      const pad = (n) => String(n).padStart(2,'0');
+      return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+
+    // ---------- Dynamic rows ----------
+    function addHazardRow(prefill=false){
+      const tbody = $("hazardTableBody");
+      const tr = document.createElement("tr");
+
+      const td1 = document.createElement("td");
+      const td2 = document.createElement("td");
+
+      const hz = document.createElement("input");
+      hz.type = "text";
+      hz.placeholder = prefill ? "e.g., Backing operations in tight work zone" : "Describe hazard";
+      hz.className = "hzField";
+
+      const ct = document.createElement("input");
+      ct.type = "text";
+      ct.placeholder = prefill ? "e.g., Assign spotter, establish exclusion zone, radio protocol" : "Describe control";
+      ct.className = "hzField";
+
+      td1.appendChild(hz);
+      td2.appendChild(ct);
+
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+
+      tbody.appendChild(tr);
+    }
+
+    function addCrewRow(multi=false){
+      const tbody = $("crewBody");
+      const count = multi ? 5 : 1;
+
+      for(let i=0;i<count;i++){
+        const tr = document.createElement("tr");
+
+        const td1 = document.createElement("td");
+        const td2 = document.createElement("td");
+        const td3 = document.createElement("td");
+
+        const name = document.createElement("input");
+        name.type = "text";
+        name.placeholder = "Printed name";
+        name.className = "crewField";
+
+        const init = document.createElement("input");
+        init.type = "text";
+        init.placeholder = "Initials";
+        init.maxLength = 4;
+        init.className = "crewField";
+
+        const co = document.createElement("input");
+        co.type = "text";
+        co.placeholder = "Archer / Sub / Trucking";
+        co.className = "crewField";
+
+        td1.appendChild(name);
+        td2.appendChild(init);
+        td3.appendChild(co);
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+
+        tbody.appendChild(tr);
+      }
+    }
+
+    // ---------- Form <-> JSON ----------
+    function getHazardRows(){
+      const rows = [];
+      const inputs = Array.from(document.querySelectorAll("#hazardTableBody tr"));
+      inputs.forEach(tr => {
+        const hz = tr.querySelectorAll("input")[0]?.value?.trim() || "";
+        const ct = tr.querySelectorAll("input")[1]?.value?.trim() || "";
+        if(hz || ct) rows.push({ hazard: hz, control: ct });
+      });
+      return rows;
+    }
+
+    function setHazardRows(data){
+      $("hazardTableBody").innerHTML = "";
+      if(!data || !data.length){
+        addHazardRow(true);
+        return;
+      }
+      data.forEach(r => {
+        addHazardRow(false);
+        const tr = $("hazardTableBody").lastElementChild;
+        const ins = tr.querySelectorAll("input");
+        ins[0].value = r.hazard || "";
+        ins[1].value = r.control || "";
+      });
+    }
+
+    function getCrewRows(){
+      const rows = [];
+      const trs = Array.from(document.querySelectorAll("#crewBody tr"));
+      trs.forEach(tr => {
+        const ins = tr.querySelectorAll("input");
+        const name = ins[0]?.value?.trim() || "";
+        const init = ins[1]?.value?.trim() || "";
+        const co   = ins[2]?.value?.trim() || "";
+        if(name || init || co) rows.push({ name, initials: init, company: co });
+      });
+      return rows;
+    }
+
+    function setCrewRows(data){
+      $("crewBody").innerHTML = "";
+      if(!data || !data.length){
+        addCrewRow(true);
+        return;
+      }
+      data.forEach(r => {
+        addCrewRow(false);
+        const tr = $("crewBody").lastElementChild;
+        const ins = tr.querySelectorAll("input");
+        ins[0].value = r.name || "";
+        ins[1].value = r.initials || "";
+        ins[2].value = r.company || "";
+      });
+    }
+
+    function serializeForm(){
+      const form = $("tailgateForm");
+      const fd = new FormData(form);
+      const obj = {};
+      fd.forEach((v,k) => {
+        if(obj[k] !== undefined){
+          if(!Array.isArray(obj[k])) obj[k] = [obj[k]];
+          obj[k].push(v);
+        } else {
+          obj[k] = v;
+        }
+      });
+
+      // checkboxes
+      const checks = Array.from(form.querySelectorAll('input[type="checkbox"]'));
+      checks.forEach(c => obj[c.name] = c.checked);
+
+      // dynamic tables
+      obj.hazardControls = getHazardRows();
+      obj.attendance = getCrewRows();
+
+      // basic metadata
+      obj.generatedAt = new Date().toISOString();
+      return obj;
+    }
+
+    function applyForm(data){
+      if(!data) return;
+
+      const form = $("tailgateForm");
+      Object.keys(data).forEach(k => {
+        if(k === "hazardControls" || k === "attendance" || k === "generatedAt") return;
+        const el = form.elements[k];
+        if(!el) return;
+
+        if(el.type === "checkbox"){
+          el.checked = !!data[k];
+        } else {
+          el.value = data[k] ?? "";
+        }
+      });
+
+      // Checkboxes (named)
+      const checks = Array.from(form.querySelectorAll('input[type="checkbox"]'));
+      checks.forEach(c => {
+        if(typeof data[c.name] === "boolean") c.checked = data[c.name];
+      });
+
+      setHazardRows(data.hazardControls);
+      setCrewRows(data.attendance);
+    }
+
+    // ---------- Draft storage ----------
+    const DRAFT_KEY = "archer_tailgate_draft_v1";
+
+    function setStatus(text, kind=""){
+      const badge = $("draftStatus");
+      badge.textContent = text;
+      badge.className = "badge " + (kind || "");
+    }
+
+    function saveDraft(){
+      const payload = serializeForm();
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(payload));
+      setStatus("Draft saved", "ok");
+    }
+
+    function loadDraft(){
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if(!raw){
+        setStatus("No saved draft found", "warn");
+        return;
+      }
+      try{
+        const data = JSON.parse(raw);
+        applyForm(data);
+        setStatus("Draft loaded", "ok");
+      }catch(e){
+        setStatus("Draft load error", "warn");
+      }
+    }
+
+    function resetForm(){
+      if(!confirm("Reset the form? This will clear the page (draft in local storage remains unless you save over it).")) return;
+      $("tailgateForm").reset();
+      $("hazardTableBody").innerHTML = "";
+      $("crewBody").innerHTML = "";
+      seedDefaults();
+      setStatus("Draft not saved");
+    }
+
+    // ---------- Download JSON ----------
+    function downloadJSON(){
+      const data = serializeForm();
+      const name = `Tailgate_${(data.contractNo || "Contract").replaceAll(" ","_")}_${(data.date || nowLocalDate())}.json`;
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // ---------- Init ----------
+    function seedDefaults(){
+      if(!$("date").value) $("date").value = nowLocalDate();
+      if(!$("startTime").value) $("startTime").value = nowLocalTime();
+      if(!$("certTime").value) $("certTime").value = nowLocalTime();
+
+      // pre-seed dynamic tables (feel like the G&J style: always starts ready-to-use)
+      addHazardRow(true);
+      addCrewRow(true);
+    }
+
+    $("saveBtn").addEventListener("click", saveDraft);
+    $("loadBtn").addEventListener("click", loadDraft);
+    $("jsonBtn").addEventListener("click", downloadJSON);
+    $("resetBtn").addEventListener("click", resetForm);
+
+    // Auto-status when typing (does not autosave)
+    document.addEventListener("input", () => setStatus("Draft not saved"));
+
+    seedDefaults();
+  </script>
+</body>
+</html>
