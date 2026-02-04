@@ -18,6 +18,9 @@
       --ok:      #065f46;
       --shadow:  0 10px 24px rgba(0,0,0,.06);
       --radius:  14px;
+
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+              "Liberation Mono", "Courier New", monospace;
     }
 
     *{box-sizing:border-box}
@@ -47,35 +50,47 @@
       position: sticky;
       top: 10px;
       z-index: 50;
+      min-height: 92px;
     }
 
     .brand{
       display:flex;
       align-items:center;
       gap:12px;
-      min-width: 260px;
+      min-width: 220px;
     }
 
+    /* ~70% of header height */
     .brand img{
-      height: 46px;
+      height: 64px;
       width: auto;
       display:block;
       object-fit: contain;
     }
 
-    .brand .meta{
-      line-height: 1.1;
+    .centerHead{
+      flex: 1 1 auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding: 0 10px;
+      min-width: 240px;
     }
-    .brand .meta .title{
-      font-size: 14px;
-      font-weight: 800;
+    .centerHead .title{
+      font-size: 15px;
+      font-weight: 900;
       color: var(--subhead);
       letter-spacing: .2px;
+      line-height: 1.15;
     }
-    .brand .meta .subtitle{
+    .centerHead .subtitle{
       font-size: 12px;
       color: var(--muted);
-      margin-top: 2px;
+      margin-top: 4px;
+      font-weight: 700;
+      line-height: 1.2;
     }
 
     .actions{
@@ -83,6 +98,8 @@
       gap:10px;
       flex-wrap:wrap;
       justify-content:flex-end;
+      align-items:center;
+      min-width: 330px;
     }
 
     button{
@@ -91,7 +108,7 @@
       color: var(--text);
       border-radius: 12px;
       padding: 10px 12px;
-      font-weight: 700;
+      font-weight: 900;
       cursor:pointer;
       transition: transform .06s ease, box-shadow .2s ease, border-color .2s ease;
       box-shadow: 0 6px 14px rgba(0,0,0,.05);
@@ -108,7 +125,7 @@
       box-shadow: none;
       border-color: var(--border);
       color: var(--muted);
-      font-weight: 800;
+      font-weight: 900;
     }
     .danger{
       border-color: #ef4444;
@@ -155,7 +172,7 @@
     .section-head .hint{
       font-size: 12px;
       color: var(--muted);
-      font-weight: 700;
+      font-weight: 750;
     }
 
     .fields{
@@ -173,7 +190,7 @@
       font-size: 12px;
       color: #374151;
       margin-bottom: 6px;
-      font-weight: 800;
+      font-weight: 900;
     }
 
     input[type="text"],
@@ -190,6 +207,7 @@
       outline: none;
       background: #fff;
       transition: border-color .2s ease, box-shadow .2s ease;
+      font-family: var(--mono);
     }
     textarea{ min-height: 88px; resize: vertical; }
     input:focus, select:focus, textarea:focus{
@@ -206,7 +224,7 @@
       padding: 8px 10px;
       background:#fff;
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 900;
       color: var(--muted);
     }
     .pill .dot{
@@ -312,7 +330,7 @@
       border-radius: 12px;
       font-size: 12px;
       color: #374151;
-      font-weight: 750;
+      font-weight: 850;
       line-height: 1.25;
     }
 
@@ -345,6 +363,100 @@
       text-align:center;
     }
 
+    /* Signature widgets */
+    .sigCell{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .sigPreview{
+      width: 160px;
+      height: 44px;
+      border: 1px dashed #d1d5db;
+      border-radius: 10px;
+      background: #fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .sigPreview img{
+      max-width: 100%;
+      max-height: 100%;
+      display:block;
+    }
+    .sigBtns{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .sigSmall{
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 900;
+      box-shadow: none;
+      white-space:nowrap;
+    }
+
+    /* Modal */
+    .modalOverlay{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 16px;
+      z-index: 200;
+    }
+    .modal{
+      width: min(760px, 100%);
+      background:#fff;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      overflow:hidden;
+    }
+    .modalHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 12px 14px;
+      background: rgba(126,126,126,.10);
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .modalHead .mhTitle{
+      font-weight: 900;
+      color: var(--subhead);
+      font-size: 13px;
+      letter-spacing:.2px;
+      text-transform: uppercase;
+    }
+    .modalBody{
+      padding: 12px 14px 14px;
+      display:grid;
+      gap: 10px;
+    }
+    canvas{
+      width: 100%;
+      height: 240px;
+      border: 2px solid rgba(0,0,126,.20);
+      border-radius: 14px;
+      background:#fff;
+      touch-action: none;
+    }
+    .modalActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      padding: 12px 14px 14px;
+      border-top: 1px solid #e5e7eb;
+      background: #fff;
+    }
+
     /* Print */
     @media print{
       body{ background:#fff; }
@@ -353,6 +465,9 @@
       .card{ box-shadow:none; }
       .wrap{ margin: 0; max-width: none; }
       .footer{ display:none; }
+      .row-actions{ display:none; }
+      .modalOverlay{ display:none !important; }
+      .sigBtns{ display:none; }
     }
   </style>
 </head>
@@ -361,18 +476,19 @@
   <div class="wrap">
     <div class="topbar">
       <div class="brand">
-        <!-- Put archer_logo.png in the same folder as this HTML, or replace src with your hosted URL -->
         <img src="archer_logo.png" alt="Archer Civil Construction LLC logo">
-        <div class="meta">
-          <div class="title">Daily Tailgate / Pre-Task Safety Meeting</div>
-          <div class="subtitle">Caltrans-ready documentation • auditable and field-practical</div>
-        </div>
+      </div>
+
+      <div class="centerHead">
+        <div class="title">Daily Tailgate / Pre-Task Safety Meeting</div>
+        <div class="subtitle">Print to PDF, then email to Safety for SharePoint upload workflow</div>
       </div>
 
       <div class="actions">
         <button class="ghost" type="button" id="loadBtn">Load Draft</button>
         <button class="ghost" type="button" id="saveBtn">Save Draft</button>
-        <button class="ghost" type="button" id="jsonBtn">Download JSON</button>
+        <button class="ghost" type="button" id="emailBtn">Email Safety</button>
+        <button class="ghost" type="button" id="sharepointBtn">Open SharePoint Folder</button>
         <button class="primary" type="button" onclick="window.print()">Print / PDF</button>
         <button class="danger" type="button" id="resetBtn">Reset</button>
       </div>
@@ -388,11 +504,11 @@
         <div class="fields cols-3">
           <div>
             <label for="projectName">Project Name</label>
-            <input id="projectName" name="projectName" type="text" placeholder="e.g., SR-63/65 Rumble Strips" required />
+            <input id="projectName" name="projectName" type="text" placeholder="SR-63/65 Rumble Strips" required />
           </div>
           <div>
             <label for="contractNo">Contract No.</label>
-            <input id="contractNo" name="contractNo" type="text" placeholder="e.g., 06-1G7404" />
+            <input id="contractNo" name="contractNo" type="text" placeholder="06-1G7404" />
           </div>
           <div>
             <label for="eaNo">EA / EFIS / Work Order</label>
@@ -411,7 +527,7 @@
           </div>
           <div>
             <label for="location">Work Location (Stationing / Area)</label>
-            <input id="location" name="location" type="text" placeholder="e.g., Sta 120+00 to 150+00" />
+            <input id="location" name="location" type="text" placeholder="Sta 120+00 to 150+00" />
           </div>
         </div>
 
@@ -438,7 +554,7 @@
         <div class="fields cols-3" style="margin-top:10px;">
           <div>
             <label for="weather">Weather / Conditions</label>
-            <input id="weather" name="weather" type="text" placeholder="e.g., Clear, windy, wet shoulder" />
+            <input id="weather" name="weather" type="text" placeholder="Clear, windy, wet shoulder" />
           </div>
           <div>
             <label for="heat">Heat Illness Plan Needed Today?</label>
@@ -470,11 +586,11 @@
         <div class="fields">
           <div>
             <label for="primaryTasks">Primary Task(s)</label>
-            <textarea id="primaryTasks" name="primaryTasks" placeholder="e.g., place HMA, compact, install rumble strips, shoulder backing"></textarea>
+            <textarea id="primaryTasks" name="primaryTasks" placeholder="place HMA, compact, install rumble strips, shoulder backing"></textarea>
           </div>
           <div>
             <label for="secondaryTasks">Secondary / Support Task(s)</label>
-            <textarea id="secondaryTasks" name="secondaryTasks" placeholder="e.g., sweep, prep, signage moves, handwork, QC support"></textarea>
+            <textarea id="secondaryTasks" name="secondaryTasks" placeholder="sweep, prep, signage moves, handwork, QC support"></textarea>
           </div>
         </div>
       </div>
@@ -491,7 +607,7 @@
             <textarea id="subs" name="subs" placeholder="List subs, trucking, suppliers, and points of contact"></textarea>
           </div>
           <div class="note">
-            Documentation tip: If a sub or trucking firm is on site, ensure they receive the same hazard briefing and confirm their controls (PPE, spotters, backup alarms, radios).
+            If subcontractors or trucking are on site, ensure they are briefed on the same hazards/controls and sign attendance.
           </div>
         </div>
       </div>
@@ -505,11 +621,11 @@
         <div class="fields cols-2">
           <div>
             <label for="equipmentList">Equipment to be Used (include unit #)</label>
-            <textarea id="equipmentList" name="equipmentList" placeholder="e.g., Paver #__, Roller #__, Water truck #__, Backhoe #__"></textarea>
+            <textarea id="equipmentList" name="equipmentList" placeholder="Paver #__, Roller #__, Water truck #__, Backhoe #__"></textarea>
           </div>
           <div>
             <label for="controlsSummary">Controls Summary (sequencing / exclusion zones / spotters / comms)</label>
-            <textarea id="controlsSummary" name="controlsSummary" placeholder="e.g., establish exclusion zone, assign spotter for backing, radio channel, pedestrian control"></textarea>
+            <textarea id="controlsSummary" name="controlsSummary" placeholder="exclusion zone, spotter for backing, radio channel, pedestrian control"></textarea>
           </div>
         </div>
 
@@ -526,9 +642,7 @@
                 <th style="width:58%;">Control Implemented (what you will do)</th>
               </tr>
             </thead>
-            <tbody id="hazardTableBody">
-              <!-- rows inserted by JS -->
-            </tbody>
+            <tbody id="hazardTableBody"></tbody>
           </table>
         </div>
       </div>
@@ -584,7 +698,7 @@
             <input type="checkbox" id="hz_hotwork" name="hz_hotwork">
             <div class="txt">
               <div class="name">Hot work / asphalt / burns</div>
-              <div class="desc">Heat-resistant PPE; safe fueling; fire extinguisher; skin exposure controls</div>
+              <div class="desc">Heat-resistant PPE; safe fueling; extinguisher; skin exposure controls</div>
             </div>
           </div>
 
@@ -600,7 +714,7 @@
             <input type="checkbox" id="hz_night" name="hz_night">
             <div class="txt">
               <div class="name">Night work / low visibility</div>
-              <div class="desc">Lighting plan; high-vis requirements; vehicle lighting; glare control</div>
+              <div class="desc">Lighting plan; Class 3 hi-vis; beacon check; glare control</div>
             </div>
           </div>
 
@@ -608,7 +722,7 @@
             <input type="checkbox" id="hz_public" name="hz_public">
             <div class="txt">
               <div class="name">Public interface</div>
-              <div class="desc">Barriers, flagging, safe pedestrian routing, clear signage, public complaints route</div>
+              <div class="desc">Barrier line, safe routing, clear signage, public complaint routing</div>
             </div>
           </div>
 
@@ -616,7 +730,7 @@
             <input type="checkbox" id="hz_materials" name="hz_materials">
             <div class="txt">
               <div class="name">HazMat / silica / dust / chemicals</div>
-              <div class="desc">SDS available; labeling; exposure controls; respirators if required; wet methods</div>
+              <div class="desc">SDS available; labeling; exposure controls; wet methods; respirators if required</div>
             </div>
           </div>
         </div>
@@ -628,7 +742,7 @@
           </div>
           <div>
             <label for="ppe">PPE Required Today (specific)</label>
-            <textarea id="ppe" name="ppe" placeholder="e.g., Class 3 vest, safety glasses, gloves, hearing, face shield, cut-resistant"></textarea>
+            <textarea id="ppe" name="ppe" placeholder="Class 3 vest, safety glasses, gloves, hearing, face shield"></textarea>
           </div>
         </div>
       </div>
@@ -642,7 +756,7 @@
         <div class="fields">
           <div>
             <label for="safetyFocus">Safety topic / near-miss / reminder</label>
-            <textarea id="safetyFocus" name="safetyFocus" placeholder="e.g., backing safety emphasis; heat illness; lane intrusion near-miss lesson learned"></textarea>
+            <textarea id="safetyFocus" name="safetyFocus" placeholder="backing safety, heat illness, lane intrusion lesson learned"></textarea>
           </div>
           <div>
             <label for="changes">Did conditions change after tailgate?</label>
@@ -659,7 +773,7 @@
       <div class="card">
         <div class="section-head">
           <h2>Attendance</h2>
-          <div class="hint">Add names and signatures/initials</div>
+          <div class="hint">Add names and sign initials</div>
         </div>
 
         <div class="row-actions">
@@ -671,14 +785,12 @@
           <table class="table" aria-label="Crew attendance table">
             <thead>
               <tr>
-                <th style="width:44%;">Printed Name</th>
-                <th style="width:20%;">Initials</th>
-                <th style="width:36%;">Company (if sub)</th>
+                <th style="width:34%;">Printed Name</th>
+                <th style="width:36%;">Initials (signature)</th>
+                <th style="width:30%;">Company (if subcontractor)</th>
               </tr>
             </thead>
-            <tbody id="crewBody">
-              <!-- rows inserted by JS -->
-            </tbody>
+            <tbody id="crewBody"></tbody>
           </table>
         </div>
 
@@ -699,8 +811,15 @@
             <textarea id="foremanCert" name="foremanCert">I certify this tailgate / pre-task safety meeting was conducted before work began, hazards were reviewed, and controls were communicated to all employees and subcontractors present.</textarea>
           </div>
           <div>
-            <label for="foremanSig">Foreman Signature (type name)</label>
-            <input id="foremanSig" name="foremanSig" type="text" placeholder="Type full name" />
+            <label>Foreman Signature (draw)</label>
+            <div class="sigCell">
+              <div class="sigPreview" id="foremanSigPreview"><span style="color:#9ca3af;font-weight:900;font-size:12px;">No signature</span></div>
+              <div class="sigBtns">
+                <button class="sigSmall" type="button" onclick="openSignature('foremanSig')">Sign</button>
+                <button class="sigSmall ghost" type="button" onclick="clearSignature('foremanSig')">Clear</button>
+              </div>
+            </div>
+            <input type="hidden" id="foremanSig" name="foremanSig" value="" />
             <div style="height:10px;"></div>
             <label for="certTime">Certification Time</label>
             <input id="certTime" name="certTime" type="time" />
@@ -710,7 +829,7 @@
         <div class="fields" style="margin-top:10px;">
           <div>
             <label for="notes">Notes / Follow-ups / Corrective Actions</label>
-            <textarea id="notes" name="notes" placeholder="Document stop-work, corrections made, additional controls, RE/TMC communications, etc."></textarea>
+            <textarea id="notes" name="notes" placeholder="stop-work, corrections made, additional controls, RE/TMC communications"></textarea>
           </div>
         </div>
       </div>
@@ -718,6 +837,26 @@
 
     <div class="footer">
       Archer Civil Construction LLC • Daily Tailgate / Pre-Task Planning Record
+    </div>
+  </div>
+
+  <!-- Signature Modal -->
+  <div class="modalOverlay" id="sigOverlay" role="dialog" aria-modal="true" aria-label="Signature dialog">
+    <div class="modal">
+      <div class="modalHead">
+        <div class="mhTitle" id="sigTitle">Signature</div>
+        <button class="ghost mini" type="button" onclick="closeSignature()">Close</button>
+      </div>
+      <div class="modalBody">
+        <div class="note">
+          Sign using finger/mouse. Use Clear if needed. Save inserts the signature into the selected field.
+        </div>
+        <canvas id="sigCanvas"></canvas>
+      </div>
+      <div class="modalActions">
+        <button class="ghost" type="button" onclick="clearCanvas()">Clear</button>
+        <button class="primary" type="button" onclick="saveSignature()">Save Signature</button>
+      </div>
     </div>
   </div>
 
@@ -736,6 +875,24 @@
       return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
     }
 
+    // ---------- Random hazard/control seed ----------
+    const HAZARD_CONTROL_SEEDS = [
+      { hazard: "Backing operations in tight work zone", control: "Assign spotter, establish exclusion zone, radio protocol, no backing without signal" },
+      { hazard: "Live traffic adjacent to work area", control: "Verify TCP setup, confirm escape path, assign TCS/flagging positions, maintain buffer zone" },
+      { hazard: "Workers on foot near heavy equipment", control: "Define pedestrian route, enforce eye contact rule, designate equipment travel lanes" },
+      { hazard: "Uneven shoulder / soft edge drop-off", control: "Mark edge, reduce speed, keep equipment back from edge, spotter for critical moves" },
+      { hazard: "Hot asphalt / burn exposure", control: "Heat-resistant gloves/sleeves, safe fueling plan, dedicated extinguisher, no skin exposure at screed" },
+      { hazard: "Night/low visibility work", control: "Lighting plan, Class 3 hi-vis, confirm beacon/lighting on all vehicles, glare control" },
+      { hazard: "Dust/silica exposure from cutting/sweeping", control: "Wet methods, vac attachment if available, respirators per exposure plan if triggered" },
+      { hazard: "Pinch points during paving/rolling", control: "Maintain separation, no stepping between equipment, clear hand signals, defined safe zones" },
+      { hazard: "Public interface near closure", control: "Barrier line, clear signage, keep pedestrians out of work zone, designate public contact point" },
+      { hazard: "Utility conflict / unknown line", control: "Confirm markings, pothole/verify, stop work if unmarked condition found, notify supervisor/RE" }
+    ];
+
+    function randomSeed(){
+      return HAZARD_CONTROL_SEEDS[Math.floor(Math.random() * HAZARD_CONTROL_SEEDS.length)];
+    }
+
     // ---------- Dynamic rows ----------
     function addHazardRow(prefill=false){
       const tbody = $("hazardTableBody");
@@ -746,20 +903,22 @@
 
       const hz = document.createElement("input");
       hz.type = "text";
-      hz.placeholder = prefill ? "e.g., Backing operations in tight work zone" : "Describe hazard";
-      hz.className = "hzField";
+      hz.placeholder = "Describe hazard";
 
       const ct = document.createElement("input");
       ct.type = "text";
-      ct.placeholder = prefill ? "e.g., Assign spotter, establish exclusion zone, radio protocol" : "Describe control";
-      ct.className = "hzField";
+      ct.placeholder = "Describe control";
+
+      if(prefill){
+        const seed = randomSeed();
+        hz.value = seed.hazard;
+        ct.value = seed.control;
+      }
 
       td1.appendChild(hz);
       td2.appendChild(ct);
-
       tr.appendChild(td1);
       tr.appendChild(td2);
-
       tbody.appendChild(tr);
     }
 
@@ -777,21 +936,58 @@
         const name = document.createElement("input");
         name.type = "text";
         name.placeholder = "Printed name";
-        name.className = "crewField";
 
-        const init = document.createElement("input");
-        init.type = "text";
-        init.placeholder = "Initials";
-        init.maxLength = 4;
-        init.className = "crewField";
+        const sigWrap = document.createElement("div");
+        sigWrap.className = "sigCell";
+
+        const preview = document.createElement("div");
+        preview.className = "sigPreview";
+        preview.innerHTML = '<span style="color:#9ca3af;font-weight:900;font-size:12px;">No initials</span>';
+
+        const btns = document.createElement("div");
+        btns.className = "sigBtns";
+
+        const signBtn = document.createElement("button");
+        signBtn.type = "button";
+        signBtn.className = "sigSmall";
+        signBtn.textContent = "Sign";
+
+        const clearBtn = document.createElement("button");
+        clearBtn.type = "button";
+        clearBtn.className = "sigSmall ghost";
+        clearBtn.textContent = "Clear";
+
+        const hidden = document.createElement("input");
+        hidden.type = "hidden";
+        hidden.name = "attendanceSig";
+        hidden.value = "";
+
+        const uid = "attSig_" + Math.random().toString(16).slice(2);
+        hidden.id = uid;
+
+        signBtn.addEventListener("click", () => openSignature(uid));
+        clearBtn.addEventListener("click", () => {
+          hidden.value = "";
+          preview.innerHTML = '<span style="color:#9ca3af;font-weight:900;font-size:12px;">No initials</span>';
+          setStatus("Draft not saved");
+        });
+
+        hidden.dataset.previewId = uid + "_preview";
+        preview.id = hidden.dataset.previewId;
+
+        btns.appendChild(signBtn);
+        btns.appendChild(clearBtn);
+
+        sigWrap.appendChild(preview);
+        sigWrap.appendChild(btns);
+        sigWrap.appendChild(hidden);
 
         const co = document.createElement("input");
         co.type = "text";
         co.placeholder = "Archer / Sub / Trucking";
-        co.className = "crewField";
 
         td1.appendChild(name);
-        td2.appendChild(init);
+        td2.appendChild(sigWrap);
         td3.appendChild(co);
 
         tr.appendChild(td1);
@@ -802,60 +998,32 @@
       }
     }
 
-    // ---------- Form <-> JSON ----------
+    // ---------- Form serialize (for draft/email) ----------
     function getHazardRows(){
       const rows = [];
-      const inputs = Array.from(document.querySelectorAll("#hazardTableBody tr"));
-      inputs.forEach(tr => {
-        const hz = tr.querySelectorAll("input")[0]?.value?.trim() || "";
-        const ct = tr.querySelectorAll("input")[1]?.value?.trim() || "";
-        if(hz || ct) rows.push({ hazard: hz, control: ct });
+      const trs = Array.from(document.querySelectorAll("#hazardTableBody tr"));
+      trs.forEach(tr => {
+        const ins = tr.querySelectorAll("input");
+        const hazard = (ins[0]?.value || "").trim();
+        const control = (ins[1]?.value || "").trim();
+        if(hazard || control) rows.push({ hazard, control });
       });
       return rows;
-    }
-
-    function setHazardRows(data){
-      $("hazardTableBody").innerHTML = "";
-      if(!data || !data.length){
-        addHazardRow(true);
-        return;
-      }
-      data.forEach(r => {
-        addHazardRow(false);
-        const tr = $("hazardTableBody").lastElementChild;
-        const ins = tr.querySelectorAll("input");
-        ins[0].value = r.hazard || "";
-        ins[1].value = r.control || "";
-      });
     }
 
     function getCrewRows(){
       const rows = [];
       const trs = Array.from(document.querySelectorAll("#crewBody tr"));
       trs.forEach(tr => {
-        const ins = tr.querySelectorAll("input");
-        const name = ins[0]?.value?.trim() || "";
-        const init = ins[1]?.value?.trim() || "";
-        const co   = ins[2]?.value?.trim() || "";
-        if(name || init || co) rows.push({ name, initials: init, company: co });
+        const name = (tr.querySelector('td:nth-child(1) input')?.value || "").trim();
+        const company = (tr.querySelector('td:nth-child(3) input')?.value || "").trim();
+        const sigHidden = tr.querySelector('input[type="hidden"][name="attendanceSig"]');
+        const sigDataUrl = sigHidden?.value || "";
+        if(name || company || sigDataUrl){
+          rows.push({ name, company, sigDataUrl });
+        }
       });
       return rows;
-    }
-
-    function setCrewRows(data){
-      $("crewBody").innerHTML = "";
-      if(!data || !data.length){
-        addCrewRow(true);
-        return;
-      }
-      data.forEach(r => {
-        addCrewRow(false);
-        const tr = $("crewBody").lastElementChild;
-        const ins = tr.querySelectorAll("input");
-        ins[0].value = r.name || "";
-        ins[1].value = r.initials || "";
-        ins[2].value = r.company || "";
-      });
     }
 
     function serializeForm(){
@@ -863,31 +1031,39 @@
       const fd = new FormData(form);
       const obj = {};
       fd.forEach((v,k) => {
-        if(obj[k] !== undefined){
-          if(!Array.isArray(obj[k])) obj[k] = [obj[k]];
-          obj[k].push(v);
-        } else {
-          obj[k] = v;
-        }
+        if(k === "attendanceSig") return;
+        obj[k] = v;
       });
 
-      // checkboxes
       const checks = Array.from(form.querySelectorAll('input[type="checkbox"]'));
       checks.forEach(c => obj[c.name] = c.checked);
 
-      // dynamic tables
       obj.hazardControls = getHazardRows();
       obj.attendance = getCrewRows();
-
-      // basic metadata
+      obj.foremanSig = $("foremanSig").value || "";
       obj.generatedAt = new Date().toISOString();
       return obj;
     }
 
+    // ---------- Draft storage ----------
+    const DRAFT_KEY = "archer_tailgate_draft_v3";
+
+    function setStatus(text, kind=""){
+      const badge = $("draftStatus");
+      badge.textContent = text;
+      badge.className = "badge " + (kind || "");
+    }
+
+    function saveDraft(){
+      const payload = serializeForm();
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(payload));
+      setStatus("Draft saved", "ok");
+    }
+
     function applyForm(data){
       if(!data) return;
-
       const form = $("tailgateForm");
+
       Object.keys(data).forEach(k => {
         if(k === "hazardControls" || k === "attendance" || k === "generatedAt") return;
         const el = form.elements[k];
@@ -900,29 +1076,41 @@
         }
       });
 
-      // Checkboxes (named)
       const checks = Array.from(form.querySelectorAll('input[type="checkbox"]'));
       checks.forEach(c => {
         if(typeof data[c.name] === "boolean") c.checked = data[c.name];
       });
 
-      setHazardRows(data.hazardControls);
-      setCrewRows(data.attendance);
-    }
+      // hazards
+      $("hazardTableBody").innerHTML = "";
+      (data.hazardControls || []).forEach(r => {
+        addHazardRow(false);
+        const tr = $("hazardTableBody").lastElementChild;
+        const ins = tr.querySelectorAll("input");
+        ins[0].value = r.hazard || "";
+        ins[1].value = r.control || "";
+      });
+      if(!data.hazardControls || !data.hazardControls.length) addHazardRow(true);
 
-    // ---------- Draft storage ----------
-    const DRAFT_KEY = "archer_tailgate_draft_v1";
+      // attendance
+      $("crewBody").innerHTML = "";
+      (data.attendance || []).forEach(r => {
+        addCrewRow(false);
+        const tr = $("crewBody").lastElementChild;
 
-    function setStatus(text, kind=""){
-      const badge = $("draftStatus");
-      badge.textContent = text;
-      badge.className = "badge " + (kind || "");
-    }
+        tr.querySelector('td:nth-child(1) input').value = r.name || "";
+        tr.querySelector('td:nth-child(3) input').value = r.company || "";
 
-    function saveDraft(){
-      const payload = serializeForm();
-      localStorage.setItem(DRAFT_KEY, JSON.stringify(payload));
-      setStatus("Draft saved", "ok");
+        const sigHidden = tr.querySelector('input[type="hidden"][name="attendanceSig"]');
+        const preview = $(sigHidden.dataset.previewId);
+        sigHidden.value = r.sigDataUrl || "";
+        renderSignaturePreview(preview, sigHidden.value, "No initials");
+      });
+      if(!data.attendance || !data.attendance.length) addCrewRow(true);
+
+      // foreman signature
+      $("foremanSig").value = data.foremanSig || "";
+      renderSignaturePreview($("foremanSigPreview"), $("foremanSig").value, "No signature");
     }
 
     function loadDraft(){
@@ -941,28 +1129,272 @@
     }
 
     function resetForm(){
-      if(!confirm("Reset the form? This will clear the page (draft in local storage remains unless you save over it).")) return;
+      if(!confirm("Reset the form? This clears the page. (Saved draft remains until overwritten.)")) return;
       $("tailgateForm").reset();
       $("hazardTableBody").innerHTML = "";
       $("crewBody").innerHTML = "";
+      $("foremanSig").value = "";
+      renderSignaturePreview($("foremanSigPreview"), "", "No signature");
       seedDefaults();
       setStatus("Draft not saved");
     }
 
-    // ---------- Download JSON ----------
-    function downloadJSON(){
-      const data = serializeForm();
-      const name = `Tailgate_${(data.contractNo || "Contract").replaceAll(" ","_")}_${(data.date || nowLocalDate())}.json`;
-      const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = name;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
+    // ---------- Email Safety (mailto) ----------
+    function buildEmailBody(data){
+      const lines = [];
+      lines.push("Archer Civil - Daily Tailgate / Pre-Task Safety Meeting");
+      lines.push("");
+      lines.push("Attach the printed PDF of the signed tailgate record to this email.");
+      lines.push("");
+      lines.push(`Project: ${data.projectName || ""}`);
+      lines.push(`Contract: ${data.contractNo || ""}   EA: ${data.eaNo || ""}`);
+      lines.push(`Date: ${data.date || ""}   Start: ${data.startTime || ""}`);
+      lines.push(`Location: ${data.location || ""}`);
+      lines.push(`Foreman: ${data.foreman || ""}   Crew Size: ${data.crewSize || ""}   Language: ${data.language || ""}`);
+      lines.push(`Weather: ${data.weather || ""}   Heat Plan: ${data.heat || ""}`);
+      lines.push(`TCP Ref: ${data.tcpRef || ""}`);
+      lines.push("");
+      lines.push("Planned Work:");
+      lines.push(data.primaryTasks || "");
+      lines.push("");
+      lines.push("Support Tasks:");
+      lines.push(data.secondaryTasks || "");
+      lines.push("");
+      lines.push("Equipment:");
+      lines.push(data.equipmentList || "");
+      lines.push("");
+      lines.push("Controls Summary:");
+      lines.push(data.controlsSummary || "");
+      lines.push("");
+      lines.push("Hazard → Control Rows:");
+      (data.hazardControls || []).forEach((r, i) => {
+        lines.push(`${i+1}. ${r.hazard || ""}  |  ${r.control || ""}`);
+      });
+      lines.push("");
+      lines.push("Safety Focus:");
+      lines.push(data.safetyFocus || "");
+      lines.push("");
+      lines.push("Notes / Corrective Actions:");
+      lines.push(data.notes || "");
+      lines.push("");
+      lines.push("Foreman certification time: " + (data.certTime || ""));
+      return lines.join("\n");
     }
+
+    function emailSafety(){
+      const data = serializeForm();
+      const contract = (data.contractNo || "").trim();
+      const date = (data.date || "").trim();
+      const foreman = (data.foreman || "").trim();
+      const crew = (data.crewSize || "").trim();
+      const project = (data.projectName || "").trim();
+
+      const subjectRaw = `TAILGATE | ${contract} | ${date} | Foreman: ${foreman} | Crew: ${crew} | Project: ${project}`;
+      const subject = encodeURIComponent(subjectRaw.trim());
+      const body = encodeURIComponent(buildEmailBody(data));
+
+      // mailto cannot attach files. User prints PDF then attaches manually.
+      window.location.href = `mailto:safety@archercivilllc.com?subject=${subject}&body=${body}`;
+    }
+
+    // ---------- SharePoint helper ----------
+    function openSharePointFolder(){
+      const url = localStorage.getItem("archer_tailgate_sharepoint_url") || "";
+      if(url){
+        window.open(url, "_blank");
+        return;
+      }
+      const entered = prompt("Paste your SharePoint folder URL for tailgate uploads (saved on this device):");
+      if(entered && entered.startsWith("http")){
+        localStorage.setItem("archer_tailgate_sharepoint_url", entered);
+        window.open(entered, "_blank");
+      }
+    }
+
+    // ---------- Signature modal ----------
+    let sigTargetInputId = null;
+
+    const overlay = $("sigOverlay");
+    const canvas = $("sigCanvas");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas(){
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(rect.width * dpr);
+      canvas.height = Math.floor(rect.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.lineWidth = 3;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = "#111827";
+    }
+
+    let drawing = false;
+    let lastX = 0, lastY = 0;
+
+    function pointFromEvent(e){
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches && e.touches[0];
+      const clientX = touch ? touch.clientX : e.clientX;
+      const clientY = touch ? touch.clientY : e.clientY;
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+
+    function startDraw(e){
+      e.preventDefault();
+      drawing = true;
+      const p = pointFromEvent(e);
+      lastX = p.x; lastY = p.y;
+    }
+    function moveDraw(e){
+      if(!drawing) return;
+      e.preventDefault();
+      const p = pointFromEvent(e);
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      lastX = p.x; lastY = p.y;
+    }
+    function endDraw(e){
+      if(!drawing) return;
+      e.preventDefault();
+      drawing = false;
+    }
+
+    canvas.addEventListener("mousedown", startDraw);
+    canvas.addEventListener("mousemove", moveDraw);
+    window.addEventListener("mouseup", endDraw);
+
+    canvas.addEventListener("touchstart", startDraw, {passive:false});
+    canvas.addEventListener("touchmove", moveDraw, {passive:false});
+    canvas.addEventListener("touchend", endDraw, {passive:false});
+
+    function clearCanvas(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+
+    function openSignature(targetInputId){
+      sigTargetInputId = targetInputId;
+      $("sigTitle").textContent = targetInputId === "foremanSig" ? "Foreman Signature" : "Initials Signature";
+      overlay.style.display = "flex";
+      setTimeout(() => { resizeCanvas(); clearCanvas(); }, 0);
+    }
+
+    function closeSignature(){
+      overlay.style.display = "none";
+      sigTargetInputId = null;
+    }
+
+    function renderSignaturePreview(previewEl, dataUrl, emptyText){
+      if(!previewEl) return;
+      if(!dataUrl){
+        previewEl.innerHTML = `<span style="color:#9ca3af;font-weight:900;font-size:12px;">${emptyText}</span>`;
+        return;
+      }
+      previewEl.innerHTML = "";
+      const im = document.createElement("img");
+      im.src = dataUrl;
+      im.alt = "signature";
+      previewEl.appendChild(im);
+    }
+
+    function cropSignature(dataUrl){
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          const off = document.createElement("canvas");
+          const octx = off.getContext("2d");
+          off.width = img.width;
+          off.height = img.height;
+          octx.drawImage(img, 0, 0);
+
+          const imgData = octx.getImageData(0,0,off.width,off.height);
+          const d = imgData.data;
+
+          let minX = off.width, minY = off.height, maxX = 0, maxY = 0;
+          let found = false;
+
+          for(let y=0; y<off.height; y++){
+            for(let x=0; x<off.width; x++){
+              const i = (y*off.width + x)*4;
+              const a = d[i+3];
+              if(a > 10){
+                found = true;
+                if(x < minX) minX = x;
+                if(y < minY) minY = y;
+                if(x > maxX) maxX = x;
+                if(y > maxY) maxY = y;
+              }
+            }
+          }
+
+          if(!found){
+            resolve("");
+            return;
+          }
+
+          const pad = 14;
+          minX = Math.max(0, minX - pad);
+          minY = Math.max(0, minY - pad);
+          maxX = Math.min(off.width, maxX + pad);
+          maxY = Math.min(off.height, maxY + pad);
+
+          const w = maxX - minX;
+          const h = maxY - minY;
+
+          const out = document.createElement("canvas");
+          const outCtx = out.getContext("2d");
+          out.width = w;
+          out.height = h;
+          outCtx.drawImage(off, minX, minY, w, h, 0, 0, w, h);
+
+          resolve(out.toDataURL("image/png"));
+        };
+        img.src = dataUrl;
+      });
+    }
+
+    async function saveSignature(){
+      if(!sigTargetInputId) return;
+
+      const full = canvas.toDataURL("image/png");
+      const cropped = await cropSignature(full);
+
+      if(!cropped){
+        alert("No signature detected. Please sign again.");
+        return;
+      }
+
+      const target = $(sigTargetInputId);
+      target.value = cropped;
+
+      if(sigTargetInputId === "foremanSig"){
+        renderSignaturePreview($("foremanSigPreview"), cropped, "No signature");
+      } else {
+        renderSignaturePreview($(target.dataset.previewId), cropped, "No initials");
+      }
+
+      setStatus("Draft not saved");
+      closeSignature();
+    }
+
+    function clearSignature(targetInputId){
+      const target = $(targetInputId);
+      if(!target) return;
+      target.value = "";
+      if(targetInputId === "foremanSig"){
+        renderSignaturePreview($("foremanSigPreview"), "", "No signature");
+      } else {
+        renderSignaturePreview($(target.dataset.previewId), "", "No initials");
+      }
+      setStatus("Draft not saved");
+    }
+
+    overlay.addEventListener("click", (e) => {
+      if(e.target === overlay) closeSignature();
+    });
 
     // ---------- Init ----------
     function seedDefaults(){
@@ -970,17 +1402,16 @@
       if(!$("startTime").value) $("startTime").value = nowLocalTime();
       if(!$("certTime").value) $("certTime").value = nowLocalTime();
 
-      // pre-seed dynamic tables (feel like the G&J style: always starts ready-to-use)
       addHazardRow(true);
       addCrewRow(true);
     }
 
     $("saveBtn").addEventListener("click", saveDraft);
     $("loadBtn").addEventListener("click", loadDraft);
-    $("jsonBtn").addEventListener("click", downloadJSON);
     $("resetBtn").addEventListener("click", resetForm);
+    $("emailBtn").addEventListener("click", emailSafety);
+    $("sharepointBtn").addEventListener("click", openSharePointFolder);
 
-    // Auto-status when typing (does not autosave)
     document.addEventListener("input", () => setStatus("Draft not saved"));
 
     seedDefaults();
