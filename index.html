@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Archer Civil - Daily Tailgate / Pre-Task Safety Meeting</title>
 
   <style>
@@ -23,25 +23,28 @@
               "Liberation Mono", "Courier New", monospace;
     }
 
-    *{box-sizing:border-box}
+    *{ box-sizing:border-box; }
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
       background: var(--bg);
       color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     .wrap{
       max-width: 1100px;
-      margin: 22px auto 80px;
+      margin: 18px auto 70px;
       padding: 0 16px;
     }
 
+    /* Header */
     .topbar{
-      display:flex;
-      gap:14px;
+      display:grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
       align-items:center;
-      justify-content:space-between;
       padding: 14px 16px;
       background: var(--card);
       border: 1px solid var(--border);
@@ -50,46 +53,45 @@
       position: sticky;
       top: 10px;
       z-index: 50;
-      min-height: 92px;
+      min-height: 96px;
     }
 
     .brand{
       display:flex;
       align-items:center;
       gap:12px;
-      min-width: 220px;
+      min-width: 180px;
     }
-
     /* ~70% of header height */
     .brand img{
-      height: 64px;
+      height: 68px;
       width: auto;
       display:block;
       object-fit: contain;
     }
 
     .centerHead{
-      flex: 1 1 auto;
       display:flex;
       flex-direction:column;
       align-items:center;
       justify-content:center;
       text-align:center;
       padding: 0 10px;
-      min-width: 240px;
+      min-width: 200px;
     }
+    /* Title +30% from prior 15px -> ~20px */
     .centerHead .title{
-      font-size: 15px;
+      font-size: 20px;
       font-weight: 900;
       color: var(--subhead);
       letter-spacing: .2px;
-      line-height: 1.15;
+      line-height: 1.1;
     }
     .centerHead .subtitle{
-      font-size: 12px;
+      font-size: 12.5px;
       color: var(--muted);
-      margin-top: 4px;
-      font-weight: 700;
+      margin-top: 6px;
+      font-weight: 750;
       line-height: 1.2;
     }
 
@@ -99,7 +101,7 @@
       flex-wrap:wrap;
       justify-content:flex-end;
       align-items:center;
-      min-width: 330px;
+      min-width: 220px;
     }
 
     button{
@@ -107,11 +109,12 @@
       background: #fff;
       color: var(--text);
       border-radius: 12px;
-      padding: 10px 12px;
+      padding: 11px 14px;
       font-weight: 900;
       cursor:pointer;
       transition: transform .06s ease, box-shadow .2s ease, border-color .2s ease;
       box-shadow: 0 6px 14px rgba(0,0,0,.05);
+      touch-action: manipulation;
     }
     button:hover{ border-color: #d1d5db; box-shadow: 0 10px 18px rgba(0,0,0,.07); }
     button:active{ transform: translateY(1px); }
@@ -133,15 +136,25 @@
       background: #ef4444;
     }
 
+    /* Cards / sections */
     .grid{
       display:grid;
       grid-template-columns: 1fr;
       gap: 14px;
       margin-top: 14px;
     }
+
     @media (min-width: 980px){
       .grid{ grid-template-columns: 1fr 1fr; }
       .span-2{ grid-column: span 2; }
+    }
+
+    /* iPad optimization */
+    @media (min-width: 768px) and (max-width: 1024px){
+      .wrap{ max-width: 1020px; }
+      .topbar{ top: 8px; }
+      button{ padding: 12px 16px; }
+      .centerHead .title{ font-size: 21px; }
     }
 
     .card{
@@ -183,6 +196,7 @@
     @media (min-width: 700px){
       .fields.cols-2{ grid-template-columns: 1fr 1fr; }
       .fields.cols-3{ grid-template-columns: 1fr 1fr 1fr; }
+      .fields.cols-4{ grid-template-columns: 1fr 1fr 1fr 1fr; }
     }
 
     label{
@@ -193,84 +207,47 @@
       font-weight: 900;
     }
 
-    input[type="text"],
-    input[type="date"],
-    input[type="time"],
-    input[type="number"],
-    select,
-    textarea{
-      width: 100%;
+    /* --- iOS Safari date/time alignment + width consistency (hardened) --- */
+    input, select, textarea{
+      display:block;
+      width:100%;
+      max-width:100%;
+      min-width:0;
+      box-sizing:border-box;
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 10px 10px;
-      font-size: 14px;
-      outline: none;
-      background: #fff;
+      padding: 11px 12px;
+      font-size: 16px; /* prevents iOS zoom and stabilizes layout */
+      outline:none;
+      background:#fff;
       transition: border-color .2s ease, box-shadow .2s ease;
       font-family: var(--mono);
+      text-align:left;
     }
     textarea{ min-height: 88px; resize: vertical; }
+
     input:focus, select:focus, textarea:focus{
       border-color: rgba(0,0,126,.55);
       box-shadow: 0 0 0 4px rgba(0,0,126,.10);
     }
 
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 8px 10px;
-      background:#fff;
-      font-size: 12px;
-      font-weight: 900;
-      color: var(--muted);
+    input[type="date"], input[type="time"]{
+      -webkit-appearance: none;
+      appearance: none;
+      text-align:left;
+      padding-left: 12px;
+      padding-right: 12px;
+      margin:0;
     }
-    .pill .dot{
-      width:10px;height:10px;border-radius:999px;background: var(--accent);
-      display:inline-block;
-    }
+    input[type="date"]::-webkit-date-and-time-value,
+    input[type="time"]::-webkit-date-and-time-value{ text-align:left; }
+    input[type="date"]::-webkit-datetime-edit,
+    input[type="time"]::-webkit-datetime-edit{ text-align:left; }
+    input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+    input[type="time"]::-webkit-datetime-edit-fields-wrapper{ text-align:left; }
 
-    .checklist{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    @media (min-width: 700px){
-      .checklist{ grid-template-columns: 1fr 1fr; }
-    }
-
-    .check{
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 10px;
-      display:flex;
-      gap: 10px;
-      align-items:flex-start;
-      background: #fff;
-    }
-    .check input[type="checkbox"]{
-      margin-top: 3px;
-      width: 18px;
-      height: 18px;
-      accent-color: var(--subhead);
-      flex: 0 0 auto;
-    }
-    .check .txt{
-      flex:1;
-    }
-    .check .txt .name{
-      font-weight: 900;
-      font-size: 13px;
-      color: #111827;
-    }
-    .check .txt .desc{
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-      line-height: 1.25;
-    }
+    /* Prevent any grid child from forcing overflow */
+    .fields > div{ min-width:0; }
 
     .row-actions{
       display:flex;
@@ -280,7 +257,7 @@
     }
 
     .mini{
-      padding: 8px 10px;
+      padding: 9px 12px;
       border-radius: 10px;
       font-size: 12px;
       font-weight: 900;
@@ -313,15 +290,6 @@
       vertical-align: top;
     }
     .table tr:last-child td{ border-bottom: none; }
-
-    .sig{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    @media (min-width: 700px){
-      .sig{ grid-template-columns: 2fr 1fr; }
-    }
 
     .note{
       border-left: 4px solid var(--accent);
@@ -356,13 +324,6 @@
     .badge.ok{ border-color: rgba(6,95,70,.25); color: var(--ok); background: rgba(6,95,70,.06); }
     .badge.warn{ border-color: rgba(185,28,28,.25); color: var(--danger); background: rgba(185,28,28,.06); }
 
-    .footer{
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align:center;
-    }
-
     /* Signature widgets */
     .sigCell{
       display:flex;
@@ -371,8 +332,8 @@
       flex-wrap:wrap;
     }
     .sigPreview{
-      width: 160px;
-      height: 44px;
+      width: 170px;
+      height: 46px;
       border: 1px dashed #d1d5db;
       border-radius: 10px;
       background: #fff;
@@ -392,7 +353,7 @@
       align-items:center;
     }
     .sigSmall{
-      padding: 8px 10px;
+      padding: 9px 12px;
       border-radius: 10px;
       font-size: 12px;
       font-weight: 900;
@@ -457,6 +418,28 @@
       background: #fff;
     }
 
+    a.linkBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--subhead);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 900;
+      text-decoration:none;
+      box-shadow: 0 6px 14px rgba(0,0,0,.05);
+    }
+    a.linkBtn:hover{ border-color:#d1d5db; box-shadow: 0 10px 18px rgba(0,0,0,.07); }
+
+    .footer{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align:center;
+    }
+
     /* Print */
     @media print{
       body{ background:#fff; }
@@ -468,6 +451,7 @@
       .row-actions{ display:none; }
       .modalOverlay{ display:none !important; }
       .sigBtns{ display:none; }
+      a.linkBtn{ display:none; }
     }
   </style>
 </head>
@@ -481,15 +465,14 @@
 
       <div class="centerHead">
         <div class="title">Daily Tailgate / Pre-Task Safety Meeting</div>
-        <div class="subtitle">Print to PDF, then email to Safety for SharePoint upload workflow</div>
+        <div class="subtitle">Save as PDF, then email to Safety for filing and distribution</div>
       </div>
 
       <div class="actions">
         <button class="ghost" type="button" id="loadBtn">Load Draft</button>
         <button class="ghost" type="button" id="saveBtn">Save Draft</button>
-        <button class="ghost" type="button" id="emailBtn">Email Safety</button>
-        <button class="ghost" type="button" id="sharepointBtn">Open SharePoint Folder</button>
-        <button class="primary" type="button" onclick="window.print()">Print / PDF</button>
+        <button class="primary" type="button" id="submitBtn">Submit</button>
+        <button class="ghost" type="button" onclick="window.print()">Print / PDF</button>
         <button class="danger" type="button" id="resetBtn">Reset</button>
       </div>
     </div>
@@ -498,47 +481,61 @@
       <div class="card span-2">
         <div class="section-head">
           <h2>Project Control</h2>
-          <div class="hint"><span class="pill"><span class="dot"></span>Use one form per crew per shift</span></div>
+          <div class="hint">Draft is stored on this device only</div>
         </div>
 
-        <div class="fields cols-3">
+        <!-- Project No. first; EA replaced -->
+        <div class="fields cols-4">
           <div>
-            <label for="projectName">Project Name</label>
-            <input id="projectName" name="projectName" type="text" placeholder="SR-63/65 Rumble Strips" required />
+            <label for="projectNo">Project No.</label>
+            <input id="projectNo" name="projectNo" type="text" placeholder="Project number" required />
           </div>
           <div>
             <label for="contractNo">Contract No.</label>
-            <input id="contractNo" name="contractNo" type="text" placeholder="06-1G7404" />
+            <input id="contractNo" name="contractNo" type="text" placeholder="Contract number" />
           </div>
           <div>
-            <label for="eaNo">EA / EFIS / Work Order</label>
-            <input id="eaNo" name="eaNo" type="text" placeholder="Optional" />
+            <label for="projectName">Project Name</label>
+            <input id="projectName" name="projectName" type="text" placeholder="Project name" required />
+          </div>
+          <div>
+            <label for="location">Work Location</label>
+            <input id="location" name="location" type="text" placeholder="Stationing or area" />
           </div>
         </div>
 
-        <div class="fields cols-3" style="margin-top:10px;">
+        <div class="fields cols-4" style="margin-top:10px;">
           <div>
             <label for="date">Date</label>
             <input id="date" name="date" type="date" required />
           </div>
           <div>
-            <label for="startTime">Tailgate Start Time</label>
+            <label for="startTime">Time</label>
             <input id="startTime" name="startTime" type="time" required />
           </div>
           <div>
-            <label for="location">Work Location (Stationing / Area)</label>
-            <input id="location" name="location" type="text" placeholder="Sta 120+00 to 150+00" />
-          </div>
-        </div>
-
-        <div class="fields cols-3" style="margin-top:10px;">
-          <div>
-            <label for="foreman">Foreman (Lead)</label>
-            <input id="foreman" name="foreman" type="text" placeholder="Name" required />
+            <label for="foreman">Foreman</label>
+            <input id="foreman" name="foreman" type="text" placeholder="Foreman name" required />
           </div>
           <div>
             <label for="crewSize">Crew Size</label>
-            <input id="crewSize" name="crewSize" type="number" min="0" step="1" placeholder="0" />
+            <input id="crewSize" name="crewSize" type="number" min="0" step="1" placeholder="Crew size" />
+          </div>
+        </div>
+
+        <div class="fields cols-4" style="margin-top:10px;">
+          <div>
+            <label for="weather">Weather / Conditions</label>
+            <input id="weather" name="weather" type="text" placeholder="Weather and conditions" />
+          </div>
+          <div>
+            <label for="heat">Heat Illness Plan</label>
+            <select id="heat" name="heat">
+              <option value="">Select</option>
+              <option>No</option>
+              <option>Yes - High heat procedures</option>
+              <option>Yes - Standard heat precautions</option>
+            </select>
           </div>
           <div>
             <label for="language">Meeting Language</label>
@@ -549,30 +546,13 @@
               <option>Bilingual</option>
             </select>
           </div>
-        </div>
-
-        <div class="fields cols-3" style="margin-top:10px;">
-          <div>
-            <label for="weather">Weather / Conditions</label>
-            <input id="weather" name="weather" type="text" placeholder="Clear, windy, wet shoulder" />
-          </div>
-          <div>
-            <label for="heat">Heat Illness Plan Needed Today?</label>
-            <select id="heat" name="heat">
-              <option value="">Select</option>
-              <option>No</option>
-              <option>Yes - high heat procedures</option>
-              <option>Yes - standard heat precautions</option>
-            </select>
-          </div>
           <div>
             <label for="tcpRef">Traffic Control Reference</label>
-            <input id="tcpRef" name="tcpRef" type="text" placeholder="TCP sheet / closure # / TMC ref" />
+            <input id="tcpRef" name="tcpRef" type="text" placeholder="TCP sheet or closure reference" />
           </div>
         </div>
 
         <div class="status">
-          <span class="badge ok">Stop-work authority applies to all employees and subs</span>
           <span class="badge" id="draftStatus">Draft not saved</span>
         </div>
       </div>
@@ -580,17 +560,17 @@
       <div class="card">
         <div class="section-head">
           <h2>Planned Work</h2>
-          <div class="hint">Describe what will happen today</div>
+          <div class="hint">Describe today’s work</div>
         </div>
 
         <div class="fields">
           <div>
             <label for="primaryTasks">Primary Task(s)</label>
-            <textarea id="primaryTasks" name="primaryTasks" placeholder="place HMA, compact, install rumble strips, shoulder backing"></textarea>
+            <textarea id="primaryTasks" name="primaryTasks" placeholder="Describe primary tasks"></textarea>
           </div>
           <div>
-            <label for="secondaryTasks">Secondary / Support Task(s)</label>
-            <textarea id="secondaryTasks" name="secondaryTasks" placeholder="sweep, prep, signage moves, handwork, QC support"></textarea>
+            <label for="secondaryTasks">Secondary Task(s)</label>
+            <textarea id="secondaryTasks" name="secondaryTasks" placeholder="Describe secondary tasks"></textarea>
           </div>
         </div>
       </div>
@@ -598,40 +578,83 @@
       <div class="card">
         <div class="section-head">
           <h2>People / Subs / Trucks</h2>
-          <div class="hint">Who is on site or interfacing</div>
+          <div class="hint">Who is on site</div>
         </div>
 
         <div class="fields">
           <div>
-            <label for="subs">Subcontractors / Trucking Companies</label>
-            <textarea id="subs" name="subs" placeholder="List subs, trucking, suppliers, and points of contact"></textarea>
+            <label for="subs">Subcontractors / Trucking</label>
+            <textarea id="subs" name="subs" placeholder="List subcontractors, trucking, suppliers, and contacts"></textarea>
           </div>
           <div class="note">
-            If subcontractors or trucking are on site, ensure they are briefed on the same hazards/controls and sign attendance.
+            Ensure subcontractors and truck drivers receive the same hazard briefing and sign attendance.
           </div>
         </div>
       </div>
 
       <div class="card span-2">
         <div class="section-head">
-          <h2>Equipment and Work Controls</h2>
-          <div class="hint">List key equipment and the control plan</div>
+          <h2>Toolbox Talk</h2>
+          <div class="hint">Document the talk used today</div>
+        </div>
+
+        <div class="fields cols-3">
+          <div>
+            <label for="toolboxTopic">Toolbox Talk Topic</label>
+            <select id="toolboxTopic" name="toolboxTopic">
+              <option value="">Select</option>
+              <option>PPE</option>
+              <option>Dust</option>
+              <option>Noise-Induced Hearing Loss</option>
+              <option>Guardrails</option>
+              <option>Heat Illness Prevention</option>
+              <option>Preventing Cave-Ins</option>
+              <option>Heavy Equipment Safety</option>
+              <option>Fall Protection</option>
+              <option>Utilities</option>
+              <option>Excavator Safe Operation</option>
+              <option>Musculoskeletal Injury Prevention</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="toolboxPages">Reference (Optional)</label>
+            <input id="toolboxPages" name="toolboxPages" type="text" placeholder="Page number or section" />
+          </div>
+          <div>
+            <label>Refer To PDF</label>
+            <a class="linkBtn" href="Toolbox%20Talks.pdf" target="_blank" rel="noopener">Open Toolbox Talks PDF</a>
+          </div>
+        </div>
+
+        <div class="fields" style="margin-top:10px;">
+          <div>
+            <label for="toolboxNotes">Toolbox Talk Notes</label>
+            <textarea id="toolboxNotes" name="toolboxNotes" placeholder="Key points discussed"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card span-2">
+        <div class="section-head">
+          <h2>Equipment and Controls</h2>
+          <div class="hint">List equipment and controls</div>
         </div>
 
         <div class="fields cols-2">
           <div>
-            <label for="equipmentList">Equipment to be Used (include unit #)</label>
-            <textarea id="equipmentList" name="equipmentList" placeholder="Paver #__, Roller #__, Water truck #__, Backhoe #__"></textarea>
+            <label for="equipmentList">Equipment Used</label>
+            <textarea id="equipmentList" name="equipmentList" placeholder="List equipment and unit numbers"></textarea>
           </div>
           <div>
-            <label for="controlsSummary">Controls Summary (sequencing / exclusion zones / spotters / comms)</label>
-            <textarea id="controlsSummary" name="controlsSummary" placeholder="exclusion zone, spotter for backing, radio channel, pedestrian control"></textarea>
+            <label for="controlsSummary">Controls Summary</label>
+            <textarea id="controlsSummary" name="controlsSummary" placeholder="Exclusion zones, spotters, radio channel, sequencing"></textarea>
           </div>
         </div>
 
         <div class="row-actions">
-          <button class="mini" type="button" onclick="addHazardRow()">+ Add Hazard → Control Row</button>
-          <button class="mini ghost" type="button" onclick="addHazardRow(true)">+ Add Row (pre-filled examples)</button>
+          <button class="mini" type="button" onclick="addHazardRow()">Add Hazard → Control Row</button>
+          <button class="mini ghost" type="button" onclick="addHazardRow(true)">Add Row (Pre-filled)</button>
         </div>
 
         <div style="margin-top:10px;">
@@ -639,7 +662,7 @@
             <thead>
               <tr>
                 <th style="width:42%;">Hazard Identified</th>
-                <th style="width:58%;">Control Implemented (what you will do)</th>
+                <th style="width:58%;">Control Implemented</th>
               </tr>
             </thead>
             <tbody id="hazardTableBody"></tbody>
@@ -649,122 +672,40 @@
 
       <div class="card span-2">
         <div class="section-head">
-          <h2>Hazard Checklist</h2>
-          <div class="hint">Check what applies today</div>
+          <h2>Hazards and PPE</h2>
+          <div class="hint">Document today’s hazards and required PPE</div>
         </div>
 
-        <div class="checklist">
-          <div class="check">
-            <input type="checkbox" id="hz_traffic" name="hz_traffic">
-            <div class="txt">
-              <div class="name">Traffic exposure / intrusion risk</div>
-              <div class="desc">Work zone set per TCP; escape path; TCS coordination; TMC call-in as required</div>
-            </div>
-          </div>
-
-          <div class="check">
-            <input type="checkbox" id="hz_mobile" name="hz_mobile">
-            <div class="txt">
-              <div class="name">Mobile equipment interaction</div>
-              <div class="desc">Pedestrian separation, defined travel paths, eye contact rules, spotter assignments</div>
-            </div>
-          </div>
-
-          <div class="check">
-            <input type="checkbox" id="hz_backing" name="hz_backing">
-            <div class="txt">
-              <div class="name">Backing operations</div>
-              <div class="desc">Backup alarms functional; spotter; no backing without signal</div>
-            </div>
-          </div>
-
-          <div class="check">
-            <input type="checkbox" id="hz_excav" name="hz_excav">
-            <div class="txt">
-              <div class="name">Excavation / trenching</div>
-              <div class="desc">Utility clearance; protective system; competent person; spoil placement; access/egress</div>
-            </div>
-          </div>
-
-          <div class="check">
-            <input type="checkbox" id="hz_overhead" name="hz_overhead">
-            <div class="txt">
-              <div class="name">Overhead hazards / power lines</div>
-              <div class="desc">Minimum clearance; dedicated spotter if needed; staging plan</div>
-            </div>
-          </div>
-
-          <div class="check">
-            <input type="checkbox" id="hz_hotwork" name="hz_hotwork">
-            <div class="txt">
-              <div class="name">Hot work / asphalt / burns</div>
-              <div class="desc">Heat-resistant PPE; safe fueling; extinguisher; skin exposure controls</div>
-            </div>
-          </div>
-
-          <div class="check">
-            <input type="checkbox" id="hz_heatill" name="hz_heatill">
-            <div class="txt">
-              <div class="name">Heat illness exposure</div>
-              <div class="desc">Water, shade, recovery plan, high heat triggers, buddy system</div>
-            </div>
-          </div>
-
-          <div class="check">
-            <input type="checkbox" id="hz_night" name="hz_night">
-            <div class="txt">
-              <div class="name">Night work / low visibility</div>
-              <div class="desc">Lighting plan; Class 3 hi-vis; beacon check; glare control</div>
-            </div>
-          </div>
-
-          <div class="check">
-            <input type="checkbox" id="hz_public" name="hz_public">
-            <div class="txt">
-              <div class="name">Public interface</div>
-              <div class="desc">Barrier line, safe routing, clear signage, public complaint routing</div>
-            </div>
-          </div>
-
-          <div class="check">
-            <input type="checkbox" id="hz_materials" name="hz_materials">
-            <div class="txt">
-              <div class="name">HazMat / silica / dust / chemicals</div>
-              <div class="desc">SDS available; labeling; exposure controls; wet methods; respirators if required</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="fields cols-2" style="margin-top:10px;">
+        <div class="fields cols-2">
           <div>
-            <label for="otherHazards">Other Hazards (describe)</label>
-            <textarea id="otherHazards" name="otherHazards" placeholder="Anything unique to today"></textarea>
+            <label for="otherHazards">Other Hazards</label>
+            <textarea id="otherHazards" name="otherHazards" placeholder="Describe other hazards"></textarea>
           </div>
           <div>
-            <label for="ppe">PPE Required Today (specific)</label>
-            <textarea id="ppe" name="ppe" placeholder="Class 3 vest, safety glasses, gloves, hearing, face shield"></textarea>
+            <label for="ppe">PPE Required</label>
+            <textarea id="ppe" name="ppe" placeholder="List required PPE"></textarea>
           </div>
         </div>
       </div>
 
       <div class="card">
         <div class="section-head">
-          <h2>Safety Focus of the Day</h2>
+          <h2>Safety Focus</h2>
           <div class="hint">One key message</div>
         </div>
 
         <div class="fields">
           <div>
-            <label for="safetyFocus">Safety topic / near-miss / reminder</label>
-            <textarea id="safetyFocus" name="safetyFocus" placeholder="backing safety, heat illness, lane intrusion lesson learned"></textarea>
+            <label for="safetyFocus">Safety Topic / Near-Miss / Reminder</label>
+            <textarea id="safetyFocus" name="safetyFocus" placeholder="Describe safety focus"></textarea>
           </div>
           <div>
-            <label for="changes">Did conditions change after tailgate?</label>
+            <label for="changes">Conditions Changed After Meeting</label>
             <select id="changes" name="changes">
               <option value="">Select</option>
               <option>No</option>
-              <option>Yes - second tailgate conducted</option>
-              <option>Yes - work paused pending controls</option>
+              <option>Yes - Second meeting conducted</option>
+              <option>Yes - Work paused pending controls</option>
             </select>
           </div>
         </div>
@@ -777,8 +718,8 @@
         </div>
 
         <div class="row-actions">
-          <button class="mini" type="button" onclick="addCrewRow()">+ Add Crew Member</button>
-          <button class="mini ghost" type="button" onclick="addCrewRow(true)">+ Add 5 Rows</button>
+          <button class="mini" type="button" onclick="addCrewRow()">Add Crew Member</button>
+          <button class="mini ghost" type="button" onclick="addCrewRow(true)">Add 5 Rows</button>
         </div>
 
         <div style="margin-top:10px;">
@@ -786,8 +727,8 @@
             <thead>
               <tr>
                 <th style="width:34%;">Printed Name</th>
-                <th style="width:36%;">Initials (signature)</th>
-                <th style="width:30%;">Company (if subcontractor)</th>
+                <th style="width:36%;">Initials (Signature)</th>
+                <th style="width:30%;">Company (If Subcontractor)</th>
               </tr>
             </thead>
             <tbody id="crewBody"></tbody>
@@ -795,7 +736,7 @@
         </div>
 
         <div class="note" style="margin-top:10px;">
-          Statement: I participated in the tailgate meeting and understand today’s tasks, hazards, and controls. I will stop work if conditions become unsafe.
+          Statement: I participated in the tailgate meeting and understand today’s tasks, hazards, and controls.
         </div>
       </div>
 
@@ -805,13 +746,14 @@
           <div class="hint">Required sign-off</div>
         </div>
 
-        <div class="sig">
+        <div class="fields cols-2">
           <div>
-            <label for="foremanCert">Foreman Certification Statement</label>
-            <textarea id="foremanCert" name="foremanCert">I certify this tailgate / pre-task safety meeting was conducted before work began, hazards were reviewed, and controls were communicated to all employees and subcontractors present.</textarea>
+            <label for="foremanCert">Certification Statement</label>
+            <textarea id="foremanCert" name="foremanCert" placeholder="Certification statement">I certify this tailgate / pre-task safety meeting was conducted before work began, hazards were reviewed, and controls were communicated to all employees and subcontractors present.</textarea>
           </div>
+
           <div>
-            <label>Foreman Signature (draw)</label>
+            <label>Foreman Signature</label>
             <div class="sigCell">
               <div class="sigPreview" id="foremanSigPreview"><span style="color:#9ca3af;font-weight:900;font-size:12px;">No signature</span></div>
               <div class="sigBtns">
@@ -820,6 +762,7 @@
               </div>
             </div>
             <input type="hidden" id="foremanSig" name="foremanSig" value="" />
+
             <div style="height:10px;"></div>
             <label for="certTime">Certification Time</label>
             <input id="certTime" name="certTime" type="time" />
@@ -828,8 +771,8 @@
 
         <div class="fields" style="margin-top:10px;">
           <div>
-            <label for="notes">Notes / Follow-ups / Corrective Actions</label>
-            <textarea id="notes" name="notes" placeholder="stop-work, corrections made, additional controls, RE/TMC communications"></textarea>
+            <label for="notes">Notes / Corrective Actions</label>
+            <textarea id="notes" name="notes" placeholder="Document corrections, additional controls, communications"></textarea>
           </div>
         </div>
       </div>
@@ -849,7 +792,7 @@
       </div>
       <div class="modalBody">
         <div class="note">
-          Sign using finger/mouse. Use Clear if needed. Save inserts the signature into the selected field.
+          Sign using finger/mouse. Clear if needed. Save inserts the signature into the selected field.
         </div>
         <canvas id="sigCanvas"></canvas>
       </div>
@@ -875,18 +818,18 @@
       return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
     }
 
-    // ---------- Random hazard/control seed ----------
+    // ---------- Random hazard/control seeds (capitalized) ----------
     const HAZARD_CONTROL_SEEDS = [
       { hazard: "Backing operations in tight work zone", control: "Assign spotter, establish exclusion zone, radio protocol, no backing without signal" },
       { hazard: "Live traffic adjacent to work area", control: "Verify TCP setup, confirm escape path, assign TCS/flagging positions, maintain buffer zone" },
       { hazard: "Workers on foot near heavy equipment", control: "Define pedestrian route, enforce eye contact rule, designate equipment travel lanes" },
-      { hazard: "Uneven shoulder / soft edge drop-off", control: "Mark edge, reduce speed, keep equipment back from edge, spotter for critical moves" },
-      { hazard: "Hot asphalt / burn exposure", control: "Heat-resistant gloves/sleeves, safe fueling plan, dedicated extinguisher, no skin exposure at screed" },
-      { hazard: "Night/low visibility work", control: "Lighting plan, Class 3 hi-vis, confirm beacon/lighting on all vehicles, glare control" },
-      { hazard: "Dust/silica exposure from cutting/sweeping", control: "Wet methods, vac attachment if available, respirators per exposure plan if triggered" },
-      { hazard: "Pinch points during paving/rolling", control: "Maintain separation, no stepping between equipment, clear hand signals, defined safe zones" },
-      { hazard: "Public interface near closure", control: "Barrier line, clear signage, keep pedestrians out of work zone, designate public contact point" },
-      { hazard: "Utility conflict / unknown line", control: "Confirm markings, pothole/verify, stop work if unmarked condition found, notify supervisor/RE" }
+      { hazard: "Uneven shoulder or soft edge drop-off", control: "Mark edge, reduce speed, keep equipment back from edge, spotter for critical moves" },
+      { hazard: "Hot asphalt or burn exposure", control: "Heat-resistant gloves and sleeves, safe fueling plan, extinguisher available, protect skin at screed" },
+      { hazard: "Low visibility or night work", control: "Confirm lighting plan, Class 3 hi-vis, verify beacons, manage glare, define pedestrian route" },
+      { hazard: "Dust or silica exposure from cutting or sweeping", control: "Use wet methods, vacuum attachment if available, respiratory protection per exposure plan if required" },
+      { hazard: "Pinch points during paving or rolling", control: "Maintain separation, establish safe zones, clear hand signals, keep workers out of pinch areas" },
+      { hazard: "Public interface near closure", control: "Maintain barrier line, clear signage, keep public out of work zone, designate public contact point" },
+      { hazard: "Utility conflict or unknown line", control: "Confirm markings, pothole to verify, stop work for unmarked conditions, notify supervisor and RE" }
     ];
 
     function randomSeed(){
@@ -984,7 +927,7 @@
 
         const co = document.createElement("input");
         co.type = "text";
-        co.placeholder = "Archer / Sub / Trucking";
+        co.placeholder = "Archer or Sub or Trucking";
 
         td1.appendChild(name);
         td2.appendChild(sigWrap);
@@ -998,7 +941,7 @@
       }
     }
 
-    // ---------- Form serialize (for draft/email) ----------
+    // ---------- Serialize ----------
     function getHazardRows(){
       const rows = [];
       const trs = Array.from(document.querySelectorAll("#hazardTableBody tr"));
@@ -1035,9 +978,6 @@
         obj[k] = v;
       });
 
-      const checks = Array.from(form.querySelectorAll('input[type="checkbox"]'));
-      checks.forEach(c => obj[c.name] = c.checked);
-
       obj.hazardControls = getHazardRows();
       obj.attendance = getCrewRows();
       obj.foremanSig = $("foremanSig").value || "";
@@ -1046,7 +986,7 @@
     }
 
     // ---------- Draft storage ----------
-    const DRAFT_KEY = "archer_tailgate_draft_v3";
+    const DRAFT_KEY = "archer_tailgate_draft_ipad_v1";
 
     function setStatus(text, kind=""){
       const badge = $("draftStatus");
@@ -1064,24 +1004,15 @@
       if(!data) return;
       const form = $("tailgateForm");
 
+      // Static fields
       Object.keys(data).forEach(k => {
         if(k === "hazardControls" || k === "attendance" || k === "generatedAt") return;
         const el = form.elements[k];
         if(!el) return;
-
-        if(el.type === "checkbox"){
-          el.checked = !!data[k];
-        } else {
-          el.value = data[k] ?? "";
-        }
+        el.value = data[k] ?? "";
       });
 
-      const checks = Array.from(form.querySelectorAll('input[type="checkbox"]'));
-      checks.forEach(c => {
-        if(typeof data[c.name] === "boolean") c.checked = data[c.name];
-      });
-
-      // hazards
+      // Hazards
       $("hazardTableBody").innerHTML = "";
       (data.hazardControls || []).forEach(r => {
         addHazardRow(false);
@@ -1092,12 +1023,11 @@
       });
       if(!data.hazardControls || !data.hazardControls.length) addHazardRow(true);
 
-      // attendance
+      // Attendance
       $("crewBody").innerHTML = "";
       (data.attendance || []).forEach(r => {
         addCrewRow(false);
         const tr = $("crewBody").lastElementChild;
-
         tr.querySelector('td:nth-child(1) input').value = r.name || "";
         tr.querySelector('td:nth-child(3) input').value = r.company || "";
 
@@ -1108,7 +1038,7 @@
       });
       if(!data.attendance || !data.attendance.length) addCrewRow(true);
 
-      // foreman signature
+      // Foreman signature preview
       $("foremanSig").value = data.foremanSig || "";
       renderSignaturePreview($("foremanSigPreview"), $("foremanSig").value, "No signature");
     }
@@ -1129,7 +1059,7 @@
     }
 
     function resetForm(){
-      if(!confirm("Reset the form? This clears the page. (Saved draft remains until overwritten.)")) return;
+      if(!confirm("Reset the form? This clears the page. Saved draft remains until overwritten.")) return;
       $("tailgateForm").reset();
       $("hazardTableBody").innerHTML = "";
       $("crewBody").innerHTML = "";
@@ -1139,25 +1069,31 @@
       setStatus("Draft not saved");
     }
 
-    // ---------- Email Safety (mailto) ----------
+    // ---------- Submit (mailto to Safety) ----------
     function buildEmailBody(data){
       const lines = [];
       lines.push("Archer Civil - Daily Tailgate / Pre-Task Safety Meeting");
       lines.push("");
-      lines.push("Attach the printed PDF of the signed tailgate record to this email.");
+      lines.push("Attach the signed PDF exported from this form.");
       lines.push("");
-      lines.push(`Project: ${data.projectName || ""}`);
-      lines.push(`Contract: ${data.contractNo || ""}   EA: ${data.eaNo || ""}`);
-      lines.push(`Date: ${data.date || ""}   Start: ${data.startTime || ""}`);
+      lines.push(`Project No.: ${data.projectNo || ""}`);
+      lines.push(`Contract No.: ${data.contractNo || ""}`);
+      lines.push(`Project Name: ${data.projectName || ""}`);
+      lines.push(`Date: ${data.date || ""}   Time: ${data.startTime || ""}`);
       lines.push(`Location: ${data.location || ""}`);
-      lines.push(`Foreman: ${data.foreman || ""}   Crew Size: ${data.crewSize || ""}   Language: ${data.language || ""}`);
+      lines.push(`Foreman: ${data.foreman || ""}   Crew Size: ${data.crewSize || ""}`);
       lines.push(`Weather: ${data.weather || ""}   Heat Plan: ${data.heat || ""}`);
-      lines.push(`TCP Ref: ${data.tcpRef || ""}`);
+      lines.push(`Language: ${data.language || ""}`);
+      lines.push(`Traffic Control Ref: ${data.tcpRef || ""}`);
+      lines.push("");
+      lines.push(`Toolbox Talk: ${data.toolboxTopic || ""}   Reference: ${data.toolboxPages || ""}`);
+      lines.push("Toolbox Notes:");
+      lines.push(data.toolboxNotes || "");
       lines.push("");
       lines.push("Planned Work:");
       lines.push(data.primaryTasks || "");
       lines.push("");
-      lines.push("Support Tasks:");
+      lines.push("Secondary Work:");
       lines.push(data.secondaryTasks || "");
       lines.push("");
       lines.push("Equipment:");
@@ -1168,11 +1104,20 @@
       lines.push("");
       lines.push("Hazard → Control Rows:");
       (data.hazardControls || []).forEach((r, i) => {
-        lines.push(`${i+1}. ${r.hazard || ""}  |  ${r.control || ""}`);
+        lines.push(`${i+1}. ${r.hazard || ""} | ${r.control || ""}`);
       });
+      lines.push("");
+      lines.push("Other Hazards:");
+      lines.push(data.otherHazards || "");
+      lines.push("");
+      lines.push("PPE Required:");
+      lines.push(data.ppe || "");
       lines.push("");
       lines.push("Safety Focus:");
       lines.push(data.safetyFocus || "");
+      lines.push("");
+      lines.push("Conditions Changed After Meeting:");
+      lines.push(data.changes || "");
       lines.push("");
       lines.push("Notes / Corrective Actions:");
       lines.push(data.notes || "");
@@ -1181,34 +1126,16 @@
       return lines.join("\n");
     }
 
-    function emailSafety(){
+    function submitToSafety(){
       const data = serializeForm();
-      const contract = (data.contractNo || "").trim();
-      const date = (data.date || "").trim();
-      const foreman = (data.foreman || "").trim();
-      const crew = (data.crewSize || "").trim();
-      const project = (data.projectName || "").trim();
 
-      const subjectRaw = `TAILGATE | ${contract} | ${date} | Foreman: ${foreman} | Crew: ${crew} | Project: ${project}`;
+      const subjectRaw =
+        `Tailgate | Project No. ${data.projectNo || ""} | ${data.date || ""} | Foreman: ${data.foreman || ""} | Crew: ${data.crewSize || ""}`;
       const subject = encodeURIComponent(subjectRaw.trim());
       const body = encodeURIComponent(buildEmailBody(data));
 
-      // mailto cannot attach files. User prints PDF then attaches manually.
+      // Note: mailto cannot attach files automatically.
       window.location.href = `mailto:safety@archercivilllc.com?subject=${subject}&body=${body}`;
-    }
-
-    // ---------- SharePoint helper ----------
-    function openSharePointFolder(){
-      const url = localStorage.getItem("archer_tailgate_sharepoint_url") || "";
-      if(url){
-        window.open(url, "_blank");
-        return;
-      }
-      const entered = prompt("Paste your SharePoint folder URL for tailgate uploads (saved on this device):");
-      if(entered && entered.startsWith("http")){
-        localStorage.setItem("archer_tailgate_sharepoint_url", entered);
-        window.open(entered, "_blank");
-      }
     }
 
     // ---------- Signature modal ----------
@@ -1277,9 +1204,17 @@
 
     function openSignature(targetInputId){
       sigTargetInputId = targetInputId;
-      $("sigTitle").textContent = targetInputId === "foremanSig" ? "Foreman Signature" : "Initials Signature";
+
+      const title =
+        (targetInputId === "foremanSig") ? "Foreman Signature" : "Initials Signature";
+
+      $("sigTitle").textContent = title;
       overlay.style.display = "flex";
-      setTimeout(() => { resizeCanvas(); clearCanvas(); }, 0);
+
+      setTimeout(() => {
+        resizeCanvas();
+        clearCanvas();
+      }, 0);
     }
 
     function closeSignature(){
@@ -1409,9 +1344,9 @@
     $("saveBtn").addEventListener("click", saveDraft);
     $("loadBtn").addEventListener("click", loadDraft);
     $("resetBtn").addEventListener("click", resetForm);
-    $("emailBtn").addEventListener("click", emailSafety);
-    $("sharepointBtn").addEventListener("click", openSharePointFolder);
+    $("submitBtn").addEventListener("click", submitToSafety);
 
+    // Status when typing (does not autosave)
     document.addEventListener("input", () => setStatus("Draft not saved"));
 
     seedDefaults();
